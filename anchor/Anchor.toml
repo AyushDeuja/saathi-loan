@@ -1,0 +1,20 @@
+[toolchain]
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+sollend = "2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv"
+
+[programs.localnet]
+sollend = "2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "cargo test"
+
+[hooks]
