@@ -10,7 +10,7 @@ pub use state::{BorrowerProfile, CollateralVault, LoanAccount, LoanStatus, PoolA
 #[cfg(test)]
 mod tests;
 
-declare_id!("2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv");
+declare_id!("7riDnJWFkQjvmD3Kv5CUo8KPSni6SsmsEZfRUVUsmynM");
 
 #[program]
 pub mod vault {

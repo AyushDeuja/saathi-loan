@@ -9,13 +9,30 @@ import { scoreRouter } from "./routes/score.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..", "..");
 const rootEnvPath = path.join(repoRoot, ".env");
-const rootEnv = dotenv.config({ path: rootEnvPath, override: true });
+const rootEnv = dotenv.config({ path: rootEnvPath });
 if (rootEnv.error) {
-  dotenv.config({ override: true });
+  dotenv.config();
+}
+const backendEnvPath = path.join(__dirname, "..", ".env");
+dotenv.config({ path: backendEnvPath, override: true });
+
+function resolveListenPort(): number {
+  if (process.env.BACKEND_PORT) {
+    return Number(process.env.BACKEND_PORT);
+  }
+  const fromEnv = process.env.PORT ? Number(process.env.PORT) : undefined;
+  // Root .env often sets PORT=3000 for Next.js; avoid binding the API on the same port locally.
+  if (
+    fromEnv === 3000 &&
+    process.env.NODE_ENV !== "production"
+  ) {
+    return 4000;
+  }
+  return fromEnv ?? 4000;
 }
 
 const app = express();
-const port = Number(process.env.PORT ?? 4000);
+const port = resolveListenPort();
 const frontendUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
 
 app.use(cors({ origin: frontendUrl }));
