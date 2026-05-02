@@ -1,10 +1,10 @@
 {
-  "name": "solend",
+  "name": "SaathiLoan",
   "version": "0.0.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/ksamrat224/SolEnd.git"
+    "url": "https://github.com/AyushDeuja/saathi-loan"
   },
   "description": "Next.js, Tailwind, @solana/kit, Anchor vault program",
   "keywords": [

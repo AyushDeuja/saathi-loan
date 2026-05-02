@@ -45,7 +45,7 @@ Do the following setup tasks:
    - anchor-lang = "0.29.0" (with features = ["init-if-needed"])
    - anchor-spl = "0.29.0"
 
-3. In project root (`/home/samrat-karki/solend`), install these additional npm packages:
+3. In project root (`/home/samrat-karki/Saathi-loan`), install these additional npm packages:
    - axios
    - @tanstack/react-query
    - zustand
