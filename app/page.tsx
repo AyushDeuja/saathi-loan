@@ -74,11 +74,11 @@ const STEPS = [
   },
 ];
 
-const sp = "var(--font-space), system-ui, sans-serif";
+const sp = "var(--font-inter), system-ui, sans-serif";
 const lo = "var(--font-lora), Georgia, serif";
 const cream = "#fdf5e8";
 const creamDark = "#f5e8d2";
-const red = "#e53935";
+const accent = "#b84d2d";
 const dark = "#1a0a00";
 const brown = "#6a4a35";
 const textBrown = "#4a3020";
@@ -150,7 +150,7 @@ export default function HomePage() {
               fontStyle: "italic",
               lineHeight: 1.1,
               letterSpacing: "-0.01em",
-              color: red,
+              color: accent,
               marginBottom: 24,
               textShadow:
                 "0 2px 6px rgba(0,0,0,0.85), 0 0 20px rgba(0,0,0,0.4)",
@@ -172,7 +172,7 @@ export default function HomePage() {
                 "0 1px 3px rgba(0,0,0,0.9), 0 2px 14px rgba(0,0,0,0.55)",
             }}
           >
-            SolLend scores your on-chain history across 30+ signals and gives
+            Saathi Loan scores your on-chain history across 30+ signals and gives
             you a loan in seconds. No forms, no banks, no friction.
           </p>
 
@@ -194,14 +194,14 @@ export default function HomePage() {
                   alignItems: "center",
                   height: 52,
                   padding: "0 34px",
-                  backgroundColor: red,
+                  backgroundColor: accent,
                   color: "#fffef9",
                   textDecoration: "none",
                   fontWeight: 700,
                   fontSize: 14,
                   fontFamily: sp,
                   letterSpacing: "0.02em",
-                  border: "2px solid #b71c1c",
+                  border: "2px solid #7d311b",
                   boxShadow:
                     "inset 0 1px 0 rgba(255,255,255,0.22), 0 4px 16px rgba(183, 28, 28, 0.35)",
                 }}
@@ -211,7 +211,7 @@ export default function HomePage() {
             ) : (
               <WalletButton
                 disconnectedLabel="Connect Wallet →"
-                className="!h-[52px] !rounded-none !border-2 !border-[#b71c1c] !bg-[#e53935] !px-8 !text-sm !font-bold !text-[#fffef9] !shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_4px_16px_rgba(183,28,28,0.35)] !ring-0"
+                className="!h-[52px] !rounded-full !border-0 !bg-primary !px-8 !text-sm !font-bold !text-primary-foreground !shadow-[0_4px_18px_rgba(122,49,27,0.25)] !ring-0"
               />
             )}
             <Link
@@ -223,7 +223,7 @@ export default function HomePage() {
                 padding: "0 30px",
                 backgroundColor: "rgba(253, 245, 232, 0.95)",
                 border: `2px solid ${brown}`,
-                color: red,
+                color: accent,
                 textDecoration: "none",
                 fontSize: 14,
                 fontWeight: 700,
@@ -265,7 +265,7 @@ export default function HomePage() {
         >
           <Image
             src="/pixel-hero.png"
-            alt="SolLend pixel art landscape"
+            alt="Saathi Loan pixel art landscape"
             fill
             priority
             sizes="100vw"
@@ -321,7 +321,7 @@ export default function HomePage() {
               </p>
               <p
                 style={{
-                  color: red,
+                  color: accent,
                   fontWeight: 700,
                   fontSize: 9,
                   letterSpacing: "0.18em",
@@ -375,7 +375,7 @@ export default function HomePage() {
                 fontSize: "clamp(24px, 3.8vw, 46px)",
                 fontWeight: 600,
                 fontStyle: "italic",
-                color: red,
+                color: accent,
                 letterSpacing: "-0.01em",
                 lineHeight: 1.1,
                 marginBottom: 20,
@@ -393,7 +393,7 @@ export default function HomePage() {
                 fontFamily: sp,
               }}
             >
-              Lending is no longer just smart contracts and APY. SolLend
+              Lending is no longer just smart contracts and APY. Saathi Loan
               scores, vaults, and disburses across every on-chain signal —
               without you jumping between three dashboards.
             </p>
@@ -410,7 +410,7 @@ export default function HomePage() {
                     style={{
                       width: 36,
                       height: 36,
-                      backgroundColor: red,
+                      backgroundColor: accent,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -474,7 +474,7 @@ export default function HomePage() {
                         style={{
                           width: 6,
                           height: 6,
-                          backgroundColor: red,
+                          backgroundColor: accent,
                           display: "inline-block",
                           flexShrink: 0,
                         }}
@@ -533,7 +533,7 @@ export default function HomePage() {
                 fontSize: "clamp(24px, 3.5vw, 44px)",
                 fontWeight: 600,
                 fontStyle: "italic",
-                color: red,
+                color: accent,
                 letterSpacing: "-0.01em",
                 lineHeight: 1.1,
               }}
@@ -561,7 +561,7 @@ export default function HomePage() {
                       fontFamily: sp,
                       fontSize: 40,
                       fontWeight: 800,
-                      color: red,
+                      color: accent,
                       lineHeight: 1,
                       letterSpacing: "-0.04em",
                     }}
@@ -647,7 +647,7 @@ export default function HomePage() {
               fontSize: "clamp(24px, 3.5vw, 46px)",
               fontWeight: 600,
               fontStyle: "italic",
-              color: red,
+              color: accent,
               lineHeight: 1.1,
               marginBottom: 20,
             }}
@@ -683,7 +683,7 @@ export default function HomePage() {
                   alignItems: "center",
                   height: 50,
                   padding: "0 32px",
-                  backgroundColor: red,
+                  backgroundColor: accent,
                   color: "white",
                   textDecoration: "none",
                   fontWeight: 700,
@@ -696,7 +696,7 @@ export default function HomePage() {
             ) : (
               <WalletButton
                 disconnectedLabel="Connect Wallet →"
-                className="!rounded-none !bg-[#e53935] !text-white !font-bold !text-sm !h-[50px] !px-8"
+                className="!h-[50px] !rounded-full !border-0 !bg-primary !px-8 !text-sm !font-bold !text-primary-foreground !shadow-sm"
               />
             )}
             <Link
@@ -736,7 +736,7 @@ export default function HomePage() {
                 style={{
                   width: 32,
                   height: 32,
-                  backgroundColor: red,
+                  backgroundColor: accent,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -750,9 +750,9 @@ export default function HomePage() {
               </div>
               <div>
                 <p style={{ color: "white", fontWeight: 700, fontSize: 14, fontFamily: sp, letterSpacing: "-0.01em" }}>
-                  sollend
+                  Saathi Loan
                 </p>
-                <p style={{ fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: red, fontFamily: sp }}>
+                <p style={{ fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: accent, fontFamily: sp }}>
                   / ON-CHAIN LENDING
                 </p>
               </div>

@@ -93,7 +93,7 @@ export function WalletButton({
         <button
           type="button"
           onClick={() => (isOpen ? close() : openMenu())}
-          className={`cursor-pointer rounded-lg bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-xs transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className ?? ""}`}
+          className={`cursor-pointer rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${className ?? ""}`}
         >
           {disconnectedLabel}
         </button>
@@ -185,7 +185,7 @@ export function WalletButton({
       <button
         type="button"
         onClick={() => (isOpen ? close() : openMenu())}
-        className={`flex cursor-pointer items-center gap-2 rounded-lg border border-border-low bg-card px-3 py-2 text-xs font-medium transition hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className ?? ""}`}
+        className={`flex cursor-pointer items-center gap-2 rounded-full border border-border bg-card px-3 py-2 text-xs font-semibold transition hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${className ?? ""}`}
       >
         <span className="h-2 w-2 shrink-0 rounded-full bg-green-500" />
         <span className="font-mono">{ellipsify(address!, 4)}</span>

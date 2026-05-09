@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { LoanRecord } from "../lib/api";
 
 type LoanCardProps = {
@@ -17,8 +17,8 @@ function lamportsStringToSol(value: string): string {
   });
 }
 
-function formatCountdown(dueTimestamp: number): string {
-  const delta = dueTimestamp - Math.floor(Date.now() / 1000);
+function formatCountdown(dueTimestamp: number, nowSec: number): string {
+  const delta = dueTimestamp - nowSec;
 
   if (delta <= 0) {
     return "Overdue";
@@ -37,12 +37,26 @@ function formatCountdown(dueTimestamp: number): string {
 
 export function LoanCard({ loan }: LoanCardProps) {
   const dueTimestamp = Number(loan.dueTimestamp);
-  const overdue = loan.status === "ACTIVE" && dueTimestamp < Date.now() / 1000;
+  const [nowSec, setNowSec] = useState<number | null>(null);
 
-  const countdown = useMemo(
-    () => formatCountdown(dueTimestamp),
-    [dueTimestamp]
-  );
+  useEffect(() => {
+    const apply = (): void => setNowSec(Math.floor(Date.now() / 1000));
+    apply();
+    const id = setInterval(apply, 30_000);
+    return (): void => clearInterval(id);
+  }, []);
+
+  const overdue =
+    nowSec !== null &&
+    loan.status === "ACTIVE" &&
+    dueTimestamp < nowSec;
+
+  const countdown = useMemo(() => {
+    if (nowSec === null) {
+      return "…";
+    }
+    return formatCountdown(dueTimestamp, nowSec);
+  }, [dueTimestamp, nowSec]);
 
   return (
     <article className="rounded-xl border border-border bg-card p-4">

@@ -2,14 +2,16 @@
 
 import type { PropsWithChildren } from "react";
 import { Navbar } from "./navbar";
+import { SiteFooter } from "./site-footer";
 
 export function AppShell({ children }: PropsWithChildren) {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="mx-auto w-full max-w-[920px] px-6 pb-20 pt-8">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 pb-16 pt-6 md:pb-24 md:pt-10">
         {children}
       </main>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Lora } from "next/font/google";
+import { Inter, Lora } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./components/providers";
 import { SmoothScroll } from "./components/smooth-scroll";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
 });
 
 const lora = Lora({
@@ -20,9 +19,9 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "SolLend — Borrow SOL On-Chain",
+  title: "Saathi Loan — Borrow SOL On-Chain",
   description:
-    "Get instant SOL loans based on your on-chain reputation. No KYC. No bank. Just Solana.",
+    "Reputation-based SOL loans on Solana. Connect your wallet, see your trust score, and borrow in seconds.",
   icons: {
     icon: "/brand-logo.png",
     shortcut: "/brand-logo.png",
@@ -38,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${lora.variable} font-sans antialiased`}
+        className={`${inter.variable} ${lora.variable} font-sans antialiased`}
       >
         <Providers>
           <SmoothScroll>{children}</SmoothScroll>
