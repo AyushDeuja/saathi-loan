@@ -20,6 +20,8 @@ type ClusterContextValue = {
 const ClusterContext = createContext<ClusterContextValue | null>(null);
 
 const STORAGE_KEY = "solana-cluster";
+/** When NEXT_PUBLIC_SOLANA_NETWORK changes (e.g. localnet→devnet), reset stale localStorage. */
+const CLUSTER_ENV_SNAPSHOT_KEY = "solana-cluster-env-snapshot";
 
 function getEnvDefaultCluster(): ClusterMoniker {
   const envValue = process.env.NEXT_PUBLIC_SOLANA_NETWORK;
@@ -32,6 +34,18 @@ function getEnvDefaultCluster(): ClusterMoniker {
 function getInitialCluster(): ClusterMoniker {
   const envDefault = getEnvDefaultCluster();
   if (typeof window === "undefined") return envDefault;
+
+  const snapshot =
+    typeof process.env.NEXT_PUBLIC_SOLANA_NETWORK === "string"
+      ? process.env.NEXT_PUBLIC_SOLANA_NETWORK
+      : "";
+  const prevSnapshot = localStorage.getItem(CLUSTER_ENV_SNAPSHOT_KEY);
+  if (prevSnapshot !== snapshot) {
+    localStorage.setItem(CLUSTER_ENV_SNAPSHOT_KEY, snapshot);
+    localStorage.setItem(STORAGE_KEY, envDefault);
+    return envDefault;
+  }
+
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored && CLUSTERS.includes(stored as ClusterMoniker)) {
     return stored as ClusterMoniker;

@@ -37,6 +37,12 @@ const PROGRAM_ID =
   (process.env.NEXT_PUBLIC_PROGRAM_ID as Address | undefined) ??
   VAULT_PROGRAM_ADDRESS;
 
+/** Pool PDA must use the same program id as each instruction (Codama `findPoolPda()` default can drift from `PROGRAM_ID`). */
+async function getPoolAddress(): Promise<Address> {
+  const [address] = await findPoolPda({ programAddress: PROGRAM_ID });
+  return address;
+}
+
 function toU64LeBytes(value: bigint): Uint8Array {
   const bytes = new Uint8Array(8);
   const view = new DataView(bytes.buffer);
@@ -82,18 +88,20 @@ export function useLoanProgram() {
   const borrower = wallet?.account.address;
 
   async function getPoolBalance(): Promise<bigint> {
-    const [poolPda] = await findPoolPda({ programAddress: PROGRAM_ID });
+    const poolPda = await getPoolAddress();
     const balance = await client.rpc.getBalance(poolPda).send();
     return balance.value;
   }
 
   async function depositPool(amountLamports: bigint | number): Promise<string> {
     if (!signer) throw new Error("Wallet not connected");
+    const pool = await getPoolAddress();
     const instruction = await (
       await import("../../generated/vault/instructions/depositPool")
     ).getDepositPoolInstructionAsync(
       {
         lender: signer,
+        pool,
         amount:
           typeof amountLamports === "bigint"
             ? amountLamports
@@ -133,9 +141,11 @@ export function useLoanProgram() {
 
   async function initializePool(): Promise<string> {
     if (!signer) throw new Error("Wallet not connected");
+    const pool = await getPoolAddress();
     const instruction = await getInitializePoolInstructionAsync(
       {
         authority: signer,
+        pool,
       },
       { programAddress: PROGRAM_ID }
     );
@@ -163,10 +173,12 @@ export function useLoanProgram() {
 
     const [loanPda] = await deriveLoanPda(borrower, loanIndex);
     const [collateralPda] = await deriveCollateralPda(borrower, loanIndex);
+    const pool = await getPoolAddress();
 
     const instruction = await getCreateLoanInstructionAsync(
       {
         borrower: signer,
+        pool,
         borrowerProfile: borrowerProfilePda,
         loanAccount: loanPda,
         collateralVault: collateralPda,
@@ -202,9 +214,12 @@ export function useLoanProgram() {
       { programAddress: PROGRAM_ID }
     );
 
+    const pool = await getPoolAddress();
+
     const instruction = await getRepayLoanInstructionAsync(
       {
         borrower: signer,
+        pool,
         loanAccount: loanPda as Address,
         collateralVault: collateralPda as Address,
         borrowerProfile: borrowerProfilePda,

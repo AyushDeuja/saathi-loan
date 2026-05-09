@@ -1,17 +1,20 @@
 [toolchain]
+# Anchor CLI vs `anchor-lang` versions: install a matching CLI with avm, e.g.:
+#   avm install 0.32.1 && avm use 0.32.1
+# Pinning `anchor_version` here can force tooling paths that require newer Cargo; prefer avm.
 
 [features]
 resolution = true
 skip-lint = false
 
 [programs.devnet]
-sollend = "2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv"
+vault = "7riDnJWFkQjvmD3Kv5CUo8KPSni6SsmsEZfRUVUsmynM"
 
 [programs.localnet]
-sollend = "2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv"
+vault = "7riDnJWFkQjvmD3Kv5CUo8KPSni6SsmsEZfRUVUsmynM"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

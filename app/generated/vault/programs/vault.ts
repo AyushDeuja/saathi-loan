@@ -30,7 +30,7 @@ import {
 } from "../instructions";
 
 export const VAULT_PROGRAM_ADDRESS =
-  "2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv" as Address<"2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv">;
+  "7riDnJWFkQjvmD3Kv5CUo8KPSni6SsmsEZfRUVUsmynM" as Address<"7riDnJWFkQjvmD3Kv5CUo8KPSni6SsmsEZfRUVUsmynM">;
 
 export enum VaultAccount {
   BorrowerProfile,
@@ -165,7 +165,7 @@ export function identifyVaultInstruction(
 }
 
 export type ParsedVaultInstruction<
-  TProgram extends string = "2P9pEjiLeri1nQBaqcYDJ3crQwasZ2p5BdJYMpPPXTFv",
+  TProgram extends string = "7riDnJWFkQjvmD3Kv5CUo8KPSni6SsmsEZfRUVUsmynM",
 > =
   | ({
       instructionType: VaultInstruction.CreateLoan;
