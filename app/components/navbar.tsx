@@ -69,13 +69,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
-          <span
-            className="hidden rounded-full border border-border/80 p-2 text-muted-foreground sm:inline-flex"
-            title="Self-custody"
-            aria-hidden
-          >
-            <Shield className="h-4 w-4" strokeWidth={1.75} />
-          </span>
+          
           <WalletButton
             disconnectedLabel="Connect Wallet"
             className="h-auto! rounded-full! border-0! bg-primary! px-5! py-2.5! text-sm! font-semibold! text-primary-foreground! shadow-none! hover:bg-primary/90!"
