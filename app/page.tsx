@@ -19,7 +19,11 @@ const PILLARS = [
     title: "Risk Scoring",
     description:
       "We read your Solana history — not your bank statement. Thirty-plus on-chain signals combine into a single borrow limit and rate. No forms. No bureaus. No waiting.",
-    bullets: ["Wallet age & activity depth", "Prior repayment history", "Current collateral ratios"],
+    bullets: [
+      "Wallet age & activity depth",
+      "Prior repayment history",
+      "Current collateral ratios",
+    ],
   },
   {
     icon: "▣",
@@ -27,7 +31,11 @@ const PILLARS = [
     title: "Vault Collateral",
     description:
       "Lock SOL or SPL tokens in a deterministic program vault. Liquidation triggers are code, not policy — every rule is visible on-chain before you sign.",
-    bullets: ["SOL + SPL token support", "Transparent auto-liquidation", "Real-time LTV monitoring"],
+    bullets: [
+      "SOL + SPL token support",
+      "Transparent auto-liquidation",
+      "Real-time LTV monitoring",
+    ],
   },
   {
     icon: "◈",
@@ -35,7 +43,11 @@ const PILLARS = [
     title: "Liquidity Pools",
     description:
       "Lenders deposit into shared pools and earn yield. Borrowers draw instantly. One pool, no intermediary capturing the spread.",
-    bullets: ["Dynamic APY for depositors", "Instant borrow drawdowns", "Protocol-level accounting"],
+    bullets: [
+      "Dynamic APY for depositors",
+      "Instant borrow drawdowns",
+      "Protocol-level accounting",
+    ],
   },
   {
     icon: "⬡",
@@ -43,7 +55,11 @@ const PILLARS = [
     title: "On-Chain Credit",
     description:
       "Every repayment writes to your permanent Solana record. Consistent borrowers earn lower rates over time — a permissionless credit history you actually own.",
-    bullets: ["Persistent credit record", "Rate improvement path", "Fully portable across dApps"],
+    bullets: [
+      "Persistent credit record",
+      "Rate improvement path",
+      "Fully portable across dApps",
+    ],
   },
 ];
 
@@ -90,11 +106,20 @@ export default function HomePage() {
   const connected = status === "connected";
 
   return (
-    <div style={{ backgroundColor: cream, minHeight: "100vh", color: dark, fontFamily: sp }}>
+    <div
+      style={{
+        backgroundColor: cream,
+        minHeight: "100vh",
+        color: dark,
+        fontFamily: sp,
+      }}
+    >
       <Navbar />
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}>
+      <section
+        style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}
+      >
         {/* Content — transparent over art; light type + shadow for readability */}
         <div
           style={{
@@ -172,8 +197,8 @@ export default function HomePage() {
                 "0 1px 3px rgba(0,0,0,0.9), 0 2px 14px rgba(0,0,0,0.55)",
             }}
           >
-            Saathi Loan scores your on-chain history across 30+ signals and gives
-            you a loan in seconds. No forms, no banks, no friction.
+            Saathi Loan scores your on-chain history across 30+ signals and
+            gives you a loan in seconds. No forms, no banks, no friction.
           </p>
 
           <div
@@ -291,7 +316,13 @@ export default function HomePage() {
       </section>
 
       {/* ── STATS ────────────────────────────────────────────── */}
-      <section style={{ backgroundColor: creamDark, borderTop: border, borderBottom: border }}>
+      <section
+        style={{
+          backgroundColor: creamDark,
+          borderTop: border,
+          borderBottom: border,
+        }}
+      >
         <div
           style={{
             maxWidth: 920,
@@ -332,7 +363,16 @@ export default function HomePage() {
               >
                 {s.label}
               </p>
-              <p style={{ color: brown, fontSize: 12, marginTop: 4, fontFamily: sp }}>{s.sub}</p>
+              <p
+                style={{
+                  color: brown,
+                  fontSize: 12,
+                  marginTop: 4,
+                  fontFamily: sp,
+                }}
+              >
+                {s.sub}
+              </p>
             </div>
           ))}
         </div>
@@ -399,13 +439,26 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 12,
+            }}
+          >
             {PILLARS.map((p) => (
               <div
                 key={p.title}
                 style={{ backgroundColor: card, padding: "34px 30px", border }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                    marginBottom: 18,
+                  }}
+                >
                   <div
                     style={{
                       width: 36,
@@ -457,7 +510,16 @@ export default function HomePage() {
                 >
                   {p.description}
                 </p>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 7 }}>
+                <ul
+                  style={{
+                    listStyle: "none",
+                    padding: 0,
+                    margin: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 7,
+                  }}
+                >
                   {p.bullets.map((b) => (
                     <li
                       key={b}
@@ -542,7 +604,13 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 10,
+            }}
+          >
             {STEPS.map((s) => (
               <div
                 key={s.num}
@@ -593,7 +661,14 @@ export default function HomePage() {
                 >
                   {s.title}
                 </h3>
-                <p style={{ color: textBrown, fontSize: 12.5, lineHeight: 1.65, fontFamily: sp }}>
+                <p
+                  style={{
+                    color: textBrown,
+                    fontSize: 12.5,
+                    lineHeight: 1.65,
+                    fontFamily: sp,
+                  }}
+                >
                   {s.desc}
                 </p>
               </div>
@@ -664,8 +739,8 @@ export default function HomePage() {
               fontFamily: sp,
             }}
           >
-            Connect, get scored, and borrow — all in one flow. No sign-up
-            form. No waiting room. No middleman.
+            Connect, get scored, and borrow — all in one flow. No sign-up form.
+            No waiting room. No middleman.
           </p>
           <div
             style={{
@@ -720,7 +795,13 @@ export default function HomePage() {
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────── */}
-      <footer style={{ backgroundColor: "#100500", padding: "52px 24px", color: "rgba(255,255,255,0.5)" }}>
+      <footer
+        style={{
+          backgroundColor: "#100500",
+          padding: "52px 24px",
+          color: "rgba(255,255,255,0.5)",
+        }}
+      >
         <div
           style={{
             maxWidth: 920,
@@ -731,7 +812,14 @@ export default function HomePage() {
           }}
         >
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                marginBottom: 12,
+              }}
+            >
               <div
                 style={{
                   width: 32,
@@ -749,15 +837,38 @@ export default function HomePage() {
                 SL
               </div>
               <div>
-                <p style={{ color: "white", fontWeight: 700, fontSize: 14, fontFamily: sp, letterSpacing: "-0.01em" }}>
+                <p
+                  style={{
+                    color: "white",
+                    fontWeight: 700,
+                    fontSize: 14,
+                    fontFamily: sp,
+                    letterSpacing: "-0.01em",
+                  }}
+                >
                   Saathi Loan
                 </p>
-                <p style={{ fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: accent, fontFamily: sp }}>
+                <p
+                  style={{
+                    fontSize: 8,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: accent,
+                    fontFamily: sp,
+                  }}
+                >
                   / ON-CHAIN LENDING
                 </p>
               </div>
             </div>
-            <p style={{ fontSize: 12.5, lineHeight: 1.7, maxWidth: 240, fontFamily: sp }}>
+            <p
+              style={{
+                fontSize: 12.5,
+                lineHeight: 1.7,
+                maxWidth: 240,
+                fontFamily: sp,
+              }}
+            >
               Score, vault, and borrow on Solana. Built for wallets that move
               fast and borrowers who earn their rate.
             </p>
@@ -781,10 +892,16 @@ export default function HomePage() {
               { label: "Dashboard", href: "/dashboard" },
               { label: "Lend", href: "/lend" },
             ].map((l) => (
-              <p key={l.label} style={{ fontSize: 13, marginBottom: 9, fontFamily: sp }}>
+              <p
+                key={l.label}
+                style={{ fontSize: 13, marginBottom: 9, fontFamily: sp }}
+              >
                 <Link
                   href={l.href}
-                  style={{ color: "rgba(255,255,255,0.5)", textDecoration: "none" }}
+                  style={{
+                    color: "rgba(255,255,255,0.5)",
+                    textDecoration: "none",
+                  }}
                 >
                   {l.label}
                 </Link>
@@ -805,8 +922,17 @@ export default function HomePage() {
             >
               NETWORK
             </p>
-            <p style={{ fontSize: 13, marginBottom: 9, fontFamily: sp }}>Solana Devnet</p>
-            <p style={{ fontSize: 13, marginBottom: 9, color: "rgba(255,255,255,0.3)", fontFamily: sp }}>
+            <p style={{ fontSize: 13, marginBottom: 9, fontFamily: sp }}>
+              Solana Devnet
+            </p>
+            <p
+              style={{
+                fontSize: 13,
+                marginBottom: 9,
+                color: "rgba(255,255,255,0.3)",
+                fontFamily: sp,
+              }}
+            >
               Mainnet — soon
             </p>
           </div>

@@ -1,16 +1,17 @@
-# SolLend — Decentralized Loan Platform on Solana
+# Saathi Loan — decentralized lending on Solana
 
-> A peer-to-pool micro-lending DApp built on Solana blockchain. Borrowers connect their Phantom wallet, get a risk score based on on-chain activity, lock SOL as collateral, and receive a SOL loan — all governed by an Anchor smart contract with no intermediaries.
+> Peer-to-pool SOL lending built on Solana. Borrowers connect a wallet, receive a reputation-based score from on-chain history, lock SOL collateral, and borrow from a programmable vault — governed by Anchor with no intermediary custody.
 
-## Current Status
+## Current status
 
-- Phase 1 is complete: the Anchor loan protocol is implemented and tested on localnet.
-- Phase 2 is complete: the backend risk scoring and loan routes are live.
-- Phase 3 is complete: the landing, borrow, and dashboard flows are in place.
-- Phase 4 has started: the lender page and pool helpers exist, but the backend pool stats/activity routes are still pending.
-- Phase 5 has not started: Devnet deployment, pool initialization, and final polish are still outstanding.
+The MVP stack is **feature-complete** for hackathon/demo use:
 
-**Quick env setup:** copy [`.env.example`](.env.example) → `.env.local` at the repo root, and [`backend/.env.example`](backend/.env.example) → `backend/.env`.
+- **Anchor vault program** — pool, borrow, repay, liquidate (see `anchor/`)
+- **Backend API** — risk scoring, loan orchestration, Prisma-backed records, lender/pool helpers (`backend/`)
+- **Next.js App Router** — landing, borrow, dashboard, lend, admin flows (`app/`)
+- **Devnet-ready** — deploy the program, set `PROGRAM_ID` + pool init scripts, configure env vars below
+
+**Quick env setup:** copy [`.env.example`](.env.example) → `.env.local` at the repo root (Next.js), and [`backend/.env.example`](backend/.env.example) → `backend/.env` (API).
 
 **Known limitation:** loan repay in the dashboard uses PDA metadata cached in **browser localStorage** after a borrow. Repay from the **same browser** where you created the loan; clearing site data removes that cache.
 
@@ -20,7 +21,7 @@
 
 ## Table of Contents
 
-2. [Project Overview](#project-overview)
+1. [Project Overview](#project-overview)
 3. [System Architecture](#system-architecture)
 4. [Tech Stack](#tech-stack)
 5. [Repository Structure](#repository-structure)
@@ -53,7 +54,7 @@ The backend API exists only to run the risk scoring calculation and relay signed
 
 ## Project Overview
 
-SolLend solves micro-lending for users who have on-chain history but no traditional credit score. The protocol:
+Saathi Loan targets users who have on-chain history but no traditional credit score. The protocol:
 
 - Reads a borrower's wallet history (age, volume, balance, repayment record) to compute a **risk score (0–100)**
 - Sets loan terms (interest rate, LTV ratio, duration) based on that score
@@ -170,7 +171,7 @@ The MVP targets **Solana Devnet** for the hackathon and is designed to go Mainne
 ## Repository Structure
 
 ```
-sollend/
+saathi-loan/
 ├── app/                        # Next.js App Router frontend
 │   ├── components/
 │   ├── generated/vault/
@@ -316,7 +317,7 @@ Final Score = Σ (factor_score × weight)
 | Wallet age         | 20         | Days since first transaction (capped at 365 days = 20 pts)            |
 | SOL balance        | 20         | Balance relative to loan amount (≥ 3× = full 20 pts)                  |
 | Transaction volume | 20         | Total tx count (500+ tx = 20 pts, logarithmic scale)                  |
-| Repayment history  | 30         | Previous SolLend loans repaid on time (30 pts each, capped)           |
+| Repayment history  | 30         | Previous Saathi repayments on time (30 pts each, capped)              |
 | DeFi activity      | 10         | Interactions with known Solana DeFi programs (Raydium, Marinade etc.) |
 
 ### Score → Loan Terms Mapping
@@ -388,8 +389,8 @@ docker --version
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-org/sollend.git
-cd sollend
+git clone https://github.com/AyushDeuja/saathi-loan.git
+cd saathi-loan
 ```
 
 ### 2. Install smart contract dependencies
@@ -443,49 +444,70 @@ solana balance
 
 ## Environment Variables
 
-Use the checked-in templates so you do not have to copy blocks manually:
+Use the tracked templates ([`.env.example`](.env.example) and [`backend/.env.example`](backend/.env.example)) instead of copying from here by hand—they stay aligned with defaults in code.
 
-| Location           | Template                                       | Create                    |
-| ------------------ | ---------------------------------------------- | ------------------------- |
-| Frontend (Next.js) | [`.env.example`](.env.example)                 | `.env.local` at repo root |
-| Backend (API)      | [`backend/.env.example`](backend/.env.example) | `backend/.env`            |
+| Where | Template | Copy to |
+| ----- | --------- | ------- |
+| Next.js client | `.env.example` | `.env.local` at repo root |
+| Express API | `backend/.env.example` | `backend/.env` |
 
-Values below mirror those files; adjust for your deploy.
+**Load order (`backend`):** [`backend/src/index.ts`](backend/src/index.ts) loads the repo-root `.env` (if present), then `backend/.env` with override so local API settings win.
 
-### Backend (`backend/.env`)
+---
 
-```env
-# Solana
-SOLANA_RPC_URL=https://api.devnet.solana.com
-PROGRAM_ID=<your_deployed_program_id>
-DEPLOYER_KEYPAIR_PATH=~/.config/solana/devnet.json
+### Frontend (`.env.local`)
 
-# Database
-DATABASE_URL=postgresql://sollend:sollend@localhost:5432/sollend
+These variables are inlined at **build time** (must be prefixed with `NEXT_PUBLIC_`).
 
-# Server
-PORT=4000
-FRONTEND_URL=http://localhost:3000
+| Variable | Required | Description |
+| -------- | --------- | ----------- |
+| `NEXT_PUBLIC_SOLANA_NETWORK` | No | Wallet cluster selector default: `devnet`, `localnet`, or `mainnet`. Falls back to `devnet`. |
+| `NEXT_PUBLIC_API_URL` | No | Base URL for the REST API (`app/lib/api.ts`, admin/lend/dashboard). Default `http://localhost:4000`. |
+| `NEXT_PUBLIC_PROGRAM_ID` | No | Anchor program pubkey (base58). If unset, codegen default `VAULT_PROGRAM_ADDRESS` from `app/generated/` is used. Set after deploying your own build. |
+| `NEXT_PUBLIC_ADMIN_WALLETS` | No | Comma-separated pubkey list allowed to access `/admin` in the UI (see [`app/lib/admin.ts`](app/lib/admin.ts)). Empty = no admins. |
 
-# Optional: Helius RPC for better rate limits (recommended)
-HELIUS_API_KEY=your_helius_key_here
-```
-
-### Frontend (`.env.local` at repo root)
+**Minimal local example:**
 
 ```env
 NEXT_PUBLIC_SOLANA_NETWORK=devnet
-NEXT_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
-NEXT_PUBLIC_PROGRAM_ID=<your_deployed_program_id>
 NEXT_PUBLIC_API_URL=http://localhost:4000
+# NEXT_PUBLIC_PROGRAM_ID=<base58-program-id>
+# NEXT_PUBLIC_ADMIN_WALLETS=<base58>,<base58>
 ```
 
-### Deployment placeholders
+---
+
+### Backend (`backend/.env`)
+
+| Variable | Required | Description |
+| -------- | --------- | ----------- |
+| `DATABASE_URL` | **Yes** (for Prisma) | PostgreSQL connection string. |
+| `SOLANA_RPC_URL` | No | RPC for scoring routes and pool logic. Default `https://api.devnet.solana.com`. |
+| `PROGRAM_ID` | Recommended | Deployed program id (base58). Matches `NEXT_PUBLIC_PROGRAM_ID` for consistent PDAs (`poolService`, scripts). |
+| `BACKEND_PORT` | No | Port for Express. Prefer this over bare `PORT` while Next uses `PORT=3000` in repo-root `.env`. Default `4000`. |
+| `PORT` | No | Fallback used by hosts that only expose `PORT` (Railway/Render). In development, values of `3000` are rewritten to avoid clashing with Next locally. |
+| `FRONTEND_URL` | No | CORS `origin`. Default `http://localhost:3000`. Must match where the browser loads the Next app (include `https` in prod). |
+| `POOL_LAUNCH_TS` | No | Unix timestamp (seconds) for estimated APY in `GET /loan/pool/stats`; omitted uses a heuristic window. |
+
+**Minimal local example:**
 
 ```env
-PROGRAM_ID=placeholder_will_update_after_deploy
-POOL_PDA=to_be_initialized_on_devnet
+BACKEND_PORT=4000
+FRONTEND_URL=http://localhost:3000
+DATABASE_URL=postgresql://sollend:sollend@localhost:5432/sollend
+
+SOLANA_RPC_URL=https://api.devnet.solana.com
+PROGRAM_ID=<your_deployed_program_id_if_backend_reads_pool_chain_state>
 ```
+
+---
+
+### Anchor devnet scripts (`backend/scripts/` etc.)
+
+Scripts such as [`init-pool`](backend/scripts/init-pool.ts) and [`fund-pool`](backend/scripts/fund-pool.ts) also read **`SOLANA_RPC_URL`**, **`PROGRAM_ID`**, and **`ANCHOR_WALLET`** (path to payer keypair; falls back per script). **`AIRDROP_SOL`**, **`FUND_POOL_SOL`** are optional knobs for funded pool experiments.
+
+Never commit `.env.local`, `.env`, or wallet keypair files.
+
 
 ---
 
@@ -639,12 +661,11 @@ Returns all active and historical loans for a wallet.
 
 ### MVP (Hackathon)
 
-- [x] Phantom wallet connect
-- [x] On-chain risk score from wallet history
-- [x] SOL collateral → SOL loan flow
-- [x] Smart contract: create, repay, liquidate
-- [x] Lender deposit pool
-- [ ] Backend pool stats/activity routes
+- [x] Wallet connect (`@solana/kit`-style adapters)
+- [x] On-chain–informed risk score from wallet history
+- [x] SOL collateral → SOL borrow flow via Anchor vault
+- [x] Smart contract: borrow, repay, liquidate; pool liquidity
+- [x] Lender UI + backend pool helpers and pool stats routes
 
 ### Phase 2
 
